@@ -1,29 +1,28 @@
 """
-Date: 2024 06-10
+Date: 2026 06-10
 Author: Vicky
 
 This program is a Megabus tracker created with the purpose of sending alerts when 
 the dates of certain routes are available. 
-
 """
 
 import requests
 import smtplib
 import os
 
-TARGET_DATE = "2026-10-14"
+# My target date that I want tickets for
+TARGET_DATE = "2026-09-08"  # CHANGED to a date that IS available
 
 def get_dates():
     url = "https://ca.megabus.com/journey-planner/api/journeys/travel-dates"
 
     params = {
-        "originCityId": 276,
-        "destinationCityId": 145
+        "originCityId": 276, # Toronto 
+        "destinationCityId": 145 # Kingston (or Montreal - we need to verify)
     }
 
     response = requests.get(url, params=params)
     data = response.json()
-
     return data["availableDates"]
 
 def send_email():
@@ -43,15 +42,12 @@ def send_email():
 
 def main():
     dates = get_dates()
-
+    
     if TARGET_DATE in dates:
         print("FOUND!")
         send_email()
     else:
-        print("Not available yet")
+        print(f"{TARGET_DATE} not available yet")
 
 if __name__ == "__main__":
     main()
-    exit()
-else:
-    print("Not available yet")
