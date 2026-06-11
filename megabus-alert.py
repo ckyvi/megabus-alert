@@ -9,6 +9,7 @@ the dates of certain routes are available.
 
 import requests
 import smtplib
+import os
 
 TARGET_DATE = "2026-10-14"
 
@@ -16,8 +17,8 @@ def get_dates():
     url = "https://ca.megabus.com/journey-planner/api/journeys/travel-dates"
 
     params = {
-        "originCityId": 276,   # Kingston
-        "destinationCityId": 145  # Toronto
+        "originCityId": 276,
+        "destinationCityId": 145
     }
 
     response = requests.get(url, params=params)
@@ -27,8 +28,8 @@ def get_dates():
 
 def send_email():
     sender = "itzvickylin@gmail.com"
-    app_password = "fsnr csol pooh fjkb"  # 👈 paste it here
-    receiver = "itzvickylin@gmail.com"
+    app_password = os.environ["EMAIL_APP_PASSWORD"]
+    receiver = "itzvicky@gmail.com"
 
     subject = "Megabus Alert"
     body = f"{TARGET_DATE} is now available!"
@@ -40,11 +41,17 @@ def send_email():
         server.login(sender, app_password)
         server.sendmail(sender, receiver, message)
 
-dates = get_dates()
+def main():
+    dates = get_dates()
 
-if TARGET_DATE in dates:
-    print("FOUND!")
-    send_email()
+    if TARGET_DATE in dates:
+        print("FOUND!")
+        send_email()
+    else:
+        print("Not available yet")
+
+if __name__ == "__main__":
+    main()
     exit()
 else:
     print("Not available yet")
