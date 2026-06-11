@@ -1,7 +1,9 @@
 name: Megabus Checker
 
 on:
-  workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *'  # ADD THIS LINE
+  workflow_dispatch:  # Keep this for manual runs
 
 jobs:
   run-script:
