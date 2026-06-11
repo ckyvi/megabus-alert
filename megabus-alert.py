@@ -30,7 +30,7 @@ def send_email():
         print("Sending email...")
         sender = "itzvickylin@gmail.com"
         app_password = os.environ.get("EMAIL_APP_PASSWORD")
-        receiver = "itzvicky@gmail.com"
+        receiver = "itzvickylin@gmail.com"
         
         if not app_password:
             print("ERROR: No password found!")
