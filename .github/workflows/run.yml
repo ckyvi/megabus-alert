@@ -1,28 +1,19 @@
 name: Megabus Checker
 
 on:
-  schedule:
-    - cron: "0 12 * * *"  # once per day (UTC)
   workflow_dispatch:
+  schedule:
+    - cron: "0 12 * * *"
 
 jobs:
   run-script:
     runs-on: ubuntu-latest
 
-    env:
-      EMAIL_APP_PASSWORD: ${{ secrets.EMAIL_APP_PASSWORD }}
-
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
-        run: pip install requests
-
-      - name: Run script
-        run: python main.py
+      - run: pip install requests
+      - run: python main.py
