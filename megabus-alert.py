@@ -26,19 +26,28 @@ def get_dates():
     return data["availableDates"]
 
 def send_email():
-    sender = "itzvickylin@gmail.com"
-    app_password = os.environ["EMAIL_APP_PASSWORD"]
-    receiver = "itzvicky@gmail.com"
-
-    subject = "Megabus Alert"
-    body = f"{TARGET_DATE} is now available!"
-
-    message = f"Subject: {subject}\n\n{body}"
-
-    with smtplib.SMTP("smtp.gmail.com", 587) as server:
-        server.starttls()
-        server.login(sender, app_password)
-        server.sendmail(sender, receiver, message)
+    try:
+        print("Sending email...")
+        sender = "itzvickylin@gmail.com"
+        app_password = os.environ.get("EMAIL_APP_PASSWORD")
+        receiver = "itzvicky@gmail.com"
+        
+        if not app_password:
+            print("ERROR: No password found!")
+            return
+            
+        subject = "Megabus Alert"
+        body = f"{TARGET_DATE} is now available!"
+        message = f"Subject: {subject}\n\n{body}"
+        
+        with smtplib.SMTP("smtp.gmail.com", 587) as server:
+            server.starttls()
+            server.login(sender, app_password)
+            server.sendmail(sender, receiver, message)
+            
+        print("Email sent successfully!")
+    except Exception as e:
+        print(f"Email error: {e}")
 
 def main():
     dates = get_dates()
