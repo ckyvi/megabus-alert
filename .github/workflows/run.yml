@@ -2,8 +2,6 @@ name: Megabus Checker
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 12 * * *"
 
 jobs:
   run-script:
@@ -11,9 +9,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - run: pip install requests
-      - run: python main.py
+      - name: Install requests
+        run: pip install requests
+
+      - name: Run script
+        run: python main.py
