@@ -11,7 +11,7 @@ import smtplib
 import os
 
 # My target date that I want tickets for
-TARGET_DATE = "2026-01-14"  # Kingston → Toronto trip
+TARGET_DATE = "2027-01-14"  # Kingston → Toronto trip
 
 def get_dates():
     url = "https://ca.megabus.com/journey-planner/api/journeys/travel-dates"
